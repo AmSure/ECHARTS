@@ -1,0 +1,211 @@
+<html>
+    <head>
+        <meta charset='utf-8'>
+	   <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/jquery/jquery.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+    </head>
+    <body>
+        <style>
+            html, body, #main {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+            }
+        </style>
+        <div id='main'></div>
+        <script>
+   
+		var myChart = echarts.init(document.getElementById('main'));
+		
+		var data = [[117.3822,42.030466,114.843373,40.769918,114.788181,39.953663,115.450484,38.940929,115.266511,38.667401,115.468881,38.13171,114.493824,38.015359],
+		[114.493824,38.044464,115.61606,37.752887,115.432087,37.460147,114.530619,37.122061,114.585811,36.619481],
+		[118.173859,39.661446,117.401172,39.973571,116.73887,39.561834,115.451059,38.889274,116.370924,38.874893,116.849253,38.32627],
+		[114.457605,38.079466,114.200043,38.471054,114.604783,38.918026,114.567989,39.09029,114.715167,39.902759,115.322278,40.058448,115.451059,40.354679,114.89914,40.719631],
+		[114.435183,38.00899,115.189472,38.357514,114.968705,38.458849,115.649405,38.371999,116.458886,38.285043,116.826832,38.299543]];
+		
+		
+		getdata();
+		
+		function getdata() {
+			var hStep = 100 / (data.length - 1);
+			var busLines = data.map(function (busLine, idx) {
+				var points = [];
+				for (var i = 0; i < busLine.length; i += 2) {
+					var pt = [busLine[i], busLine[i + 1]];
+					points.push(pt);
+				}
+				return {
+					name:"aaa",
+					coords: points,
+					lineStyle: {
+						normal: {
+							color: echarts.color.modifyHSL('#5A94DF', Math.round(hStep * idx))
+						}
+					}
+				};
+			});
+			console.log(busLines.length);
+			// busLines = busLines.slice(0, 100);
+			myChart.setOption({
+				animation: false,
+				bmap: {
+					center: [116.46, 39.92],
+					zoom: 7,
+					roam: true,
+					mapStyle: {
+					  'styleJson': [
+						{
+						  'featureType': 'water',
+						  'elementType': 'all',
+						  'stylers': {
+							'color': '#031628'
+						  }
+						},
+						{
+						  'featureType': 'land',
+						  'elementType': 'geometry',
+						  'stylers': {
+							'color': '#000102'
+						  }
+						},
+						{
+						  'featureType': 'highway',
+						  'elementType': 'all',
+						  'stylers': {
+							'visibility': 'off'
+						  }
+						},
+						{
+						  'featureType': 'arterial',
+						  'elementType': 'geometry.fill',
+						  'stylers': {
+							'color': '#000000'
+						  }
+						},
+						{
+						  'featureType': 'arterial',
+						  'elementType': 'geometry.stroke',
+						  'stylers': {
+							'color': '#0b3d51'
+						  }
+						},
+						{
+						  'featureType': 'local',
+						  'elementType': 'geometry',
+						  'stylers': {
+							'color': '#000000'
+						  }
+						},
+						{
+						  'featureType': 'railway',
+						  'elementType': 'geometry.fill',
+						  'stylers': {
+							'color': '#000000'
+						  }
+						},
+						{
+						  'featureType': 'railway',
+						  'elementType': 'geometry.stroke',
+						  'stylers': {
+							'color': '#08304b'
+						  }
+						},
+						{
+						  'featureType': 'subway',
+						  'elementType': 'geometry',
+						  'stylers': {
+							'lightness': -70
+						  }
+						},
+						{
+						  'featureType': 'building',
+						  'elementType': 'geometry.fill',
+						  'stylers': {
+							'color': '#000000'
+						  }
+						},
+						{
+						  'featureType': 'all',
+						  'elementType': 'labels.text.fill',
+						  'stylers': {
+							'color': '#857f7f'
+						  }
+						},
+						{
+						  'featureType': 'all',
+						  'elementType': 'labels.text.stroke',
+						  'stylers': {
+							'color': '#000000'
+						  }
+						},
+						{
+						  'featureType': 'building',
+						  'elementType': 'geometry',
+						  'stylers': {
+							'color': '#022338'
+						  }
+						},
+						{
+						  'featureType': 'green',
+						  'elementType': 'geometry',
+						  'stylers': {
+							'color': '#062032'
+						  }
+						},
+						{
+						  'featureType': 'boundary',
+						  'elementType': 'all',
+						  'stylers': {
+							'color': '#465b6c'
+						  }
+						},
+						{
+						  'featureType': 'manmade',
+						  'elementType': 'all',
+						  'stylers': {
+							'color': '#022338'
+						  }
+						},
+						{
+						  'featureType': 'label',
+						  'elementType': 'all',
+						  'stylers': {
+							'visibility': 'off'
+						  }
+						}
+					  ]
+					}
+				},
+				tooltip: {
+					 trigger: 'item'
+				},
+				series: [{
+					type: 'lines',
+					coordinateSystem: 'bmap',
+					polyline: true,
+					data: busLines,
+					effect: {
+						show: true,
+						period: 15,
+						trailLength: 0,
+						symbolSize: 5
+					},lineStyle: {
+						normal: {
+							opacity: 0.2,
+							width: 3
+						}
+					}
+				}]
+			});
+
+		}
+           
+
+        </script>
+    </body>
+</html>
